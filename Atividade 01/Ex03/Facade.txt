@@ -1,0 +1,41 @@
+# Subsistemas do sistema legado
+classe Faturamento {
+    metodo processaFatura(pedidoId: string) {
+        # código para processar fatura
+    }
+}
+
+classe Estoque {
+    metodo atualizaEstoque(pedidoId: string) {
+        # código para atualizar estoque
+    }
+}
+
+classe Logistica {
+    metodo despachaPedido(pedidoId: string) {
+        # código para despachar pedido
+    }
+}
+
+# Facade que simplifica o uso dos subsistemas legados
+classe PedidoFacade {
+    faturamento: Faturamento
+    estoque: Estoque
+    logistica: Logistica
+
+    construtor PedidoFacade() {
+        this.faturamento = new Faturamento()
+        this.estoque = new Estoque()
+        this.logistica = new Logistica()
+    }
+
+    metodo processaPedido(pedidoId: string) {
+        this.faturamento.processaFatura(pedidoId)
+        this.estoque.atualizaEstoque(pedidoId)
+        this.logistica.despachaPedido(pedidoId)
+    }
+}
+
+# Uso do Facade no novo sistema
+pedidoFacade = PedidoFacade()
+pedidoFacade.processaPedido("PED123")

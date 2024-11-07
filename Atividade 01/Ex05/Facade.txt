@@ -1,0 +1,44 @@
+# Subsistemas do prontuário
+classe HistoricoMedico {
+    metodo visualizarHistorico(pacienteId: string) {
+        # código para acessar histórico médico
+        print("Exibindo histórico médico de", pacienteId)
+    }
+}
+
+classe Exames {
+    metodo visualizarExames(pacienteId: string) {
+        # código para acessar exames do paciente
+        print("Exibindo exames de", pacienteId)
+    }
+}
+
+classe Prescricoes {
+    metodo visualizarPrescricoes(pacienteId: string) {
+        # código para acessar prescrições do paciente
+        print("Exibindo prescrições de", pacienteId)
+    }
+}
+
+# Facade para simplificar o acesso ao prontuário
+classe ProntuarioFacade {
+    historico: HistoricoMedico
+    exames: Exames
+    prescricoes: Prescricoes
+
+    construtor ProntuarioFacade() {
+        this.historico = new HistoricoMedico()
+        this.exames = new Exames()
+        this.prescricoes = new Prescricoes()
+    }
+
+    metodo exibirProntuarioCompleto(pacienteId: string) {
+        this.historico.visualizarHistorico(pacienteId)
+        this.exames.visualizarExames(pacienteId)
+        this.prescricoes.visualizarPrescricoes(pacienteId)
+    }
+}
+
+# Exemplo de uso do Facade
+prontuario = new ProntuarioFacade()
+prontuario.exibirProntuarioCompleto("PAC123")

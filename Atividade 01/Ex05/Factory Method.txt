@@ -1,0 +1,37 @@
+# Interface para perfil de pacientes
+interface Paciente {
+    metodo exibirDetalhes()
+}
+
+# Classes concretas para cada perfil de paciente
+classe PacienteAdulto implements Paciente {
+    metodo exibirDetalhes() {
+        print("Perfil: Adulto. Permissões: Acesso completo ao prontuário")
+    }
+}
+
+classe PacientePediatrico implements Paciente {
+    metodo exibirDetalhes() {
+        print("Perfil: Pediátrico. Permissões: Acesso restrito, requer autorização dos responsáveis")
+    }
+}
+
+# Fábrica para criar pacientes
+classe PacienteFactory {
+    metodo criarPaciente(tipo: string): Paciente {
+        se tipo == "adulto" então
+            return new PacienteAdulto()
+        senão se tipo == "pediatrico" então
+            return new PacientePediatrico()
+        senão
+            print("Tipo de paciente inválido")
+    }
+}
+
+# Exemplo de uso
+factory = new PacienteFactory()
+pacienteAdulto = factory.criarPaciente("adulto")
+pacienteAdulto.exibirDetalhes()
+
+pacientePediatrico = factory.criarPaciente("pediatrico")
+pacientePediatrico.exibirDetalhes()

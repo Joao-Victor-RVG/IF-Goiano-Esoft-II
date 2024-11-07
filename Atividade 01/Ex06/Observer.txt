@@ -1,0 +1,81 @@
+# Interface para o Sujeito
+interface Sujeito {
+    metodo registrarObservador(obs: Observador)
+    metodo removerObservador(obs: Observador)
+    metodo notificarObservadores(evento: string)
+}
+
+# Interface para o Observador
+interface Observador {
+    metodo atualizar(evento: string)
+}
+
+# Classe concreta do Sujeito, onde eventos ocorrem
+classe Mensageiro implements Sujeito {
+    lista_observadores: List<Observador>
+    estado: string
+
+    construtor Mensageiro() {
+        lista_observadores = []
+    }
+
+    metodo registrarObservador(obs: Observador) {
+        lista_observadores.append(obs)
+    }
+
+    metodo removerObservador(obs: Observador) {
+        lista_observadores.remove(obs)
+    }
+
+    metodo notificarObservadores(evento: string) {
+        para cada observador em lista_observadores
+            observador.atualizar(evento)
+    }
+
+    metodo receberMensagem(mensagem: string) {
+        print("Nova mensagem recebida:", mensagem)
+        estado = "Mensagem recebida"
+        notificarObservadores(estado)
+    }
+
+    metodo lerMensagem(mensagemId: string) {
+        print("Mensagem", mensagemId, "foi lida.")
+        estado = "Mensagem lida"
+        notificarObservadores(estado)
+    }
+}
+
+# Observador concreto que lida com notificações de novos eventos
+classe Notificacao implements Observador {
+    metodo atualizar(evento: string) {
+        se evento == "Mensagem recebida" então
+            print("Notificação: Você tem uma nova mensagem!")
+        senão se evento == "Mensagem lida" então
+            print("Notificação: Uma mensagem foi lida.")
+    }
+}
+
+# Observador concreto que registra o histórico das mensagens
+classe Historico implements Observador {
+    metodo atualizar(evento: string) {
+        se evento == "Mensagem recebida" então
+            print("Histórico: Registrando nova mensagem no histórico.")
+        senão se evento == "Mensagem lida" então
+            print("Histórico: Atualizando status da mensagem para 'Lida'.")
+    }
+}
+
+# Exemplo de uso do Observer
+mensageiro = new Mensageiro()
+
+# Criação de observadores para notificação e histórico
+notificacao = new Notificacao()
+historico = new Historico()
+
+# Registro dos observadores
+mensageiro.registrarObservador(notificacao)
+mensageiro.registrarObservador(historico)
+
+# Simulação de recebimento e leitura de mensagens
+mensageiro.receberMensagem("Olá, como você está?")
+mensageiro.lerMensagem("123")

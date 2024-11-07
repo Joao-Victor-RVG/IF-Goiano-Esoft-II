@@ -1,0 +1,33 @@
+# Classe de controle de acesso
+classe ControleAcessoSingleton {
+    # Instância única da classe
+    instancia: ControleAcessoSingleton
+
+    # Dicionário de permissões
+    permissoes = {
+        "administrador": ["gerenciar usuários", "acessar todos os prontuários"],
+        "medico": ["acessar prontuário", "prescrever medicamentos"],
+        "enfermeiro": ["visualizar prontuário"]
+    }
+
+    # Método para obter a instância única
+    metodo obterInstancia() {
+        se ControleAcessoSingleton.instancia é null então
+            ControleAcessoSingleton.instancia = new ControleAcessoSingleton()
+        return ControleAcessoSingleton.instancia
+    }
+
+    metodo verificarPermissao(usuarioTipo: string, acao: string): boolean {
+        se acao em permissoes[usuarioTipo] então
+            return true
+        senão
+            return false
+    }
+}
+
+# Exemplo de uso do Singleton
+controleAcesso = ControleAcessoSingleton.obterInstancia()
+if controleAcesso.verificarPermissao("medico", "prescrever medicamentos") então
+    print("Permissão concedida.")
+senão
+    print("Permissão negada.")

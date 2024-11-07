@@ -1,0 +1,35 @@
+# Interface esperada pelo novo sistema
+interface NovoSistemaPagamento {
+    processaPagamento(valor: float, moeda: string)
+}
+
+# Classe do sistema legado que queremos adaptar
+classe SistemaPagamentoLegado {
+    metodo efetuarPagamento(amount: float, currency: string, reference: string) {
+        # código para processamento de pagamento no sistema legado
+    }
+}
+
+# Adapter que permite o novo sistema usar o sistema legado
+classe AdapterSistemaPagamento implements NovoSistemaPagamento {
+    # Referência ao sistema de pagamento legado
+    legado: SistemaPagamentoLegado
+
+    construtor AdapterSistemaPagamento(legado: SistemaPagamentoLegado) {
+        this.legado = legado
+    }
+
+    metodo processaPagamento(valor: float, moeda: string) {
+        referencia = gerarReferencia()  # gera uma referência para o pagamento
+        this.legado.efetuarPagamento(valor, moeda, referencia)
+    }
+
+    metodo gerarReferencia() {
+        # lógica para gerar referência
+        return "REF123"
+    }
+}
+
+# Uso do Adapter no novo sistema
+novoSistema = AdapterSistemaPagamento(new SistemaPagamentoLegado())
+novoSistema.processaPagamento(100.0, "BRL")

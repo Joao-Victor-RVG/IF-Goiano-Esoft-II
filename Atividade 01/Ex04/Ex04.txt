@@ -1,0 +1,68 @@
+# Interface para os diferentes tipos de usuários
+interface Usuario {
+    metodo exibirPermissoes()
+}
+
+# Classes concretas para cada tipo de usuário
+classe Admin implements Usuario {
+    metodo exibirPermissoes() {
+        print("Permissões: Gerenciar usuários, visualizar relatórios, acessar todos os módulos")
+    }
+}
+
+classe Cliente implements Usuario {
+    metodo exibirPermissoes() {
+        print("Permissões: Comprar produtos, acessar histórico de pedidos, alterar perfil")
+    }
+}
+
+classe Fornecedor implements Usuario {
+    metodo exibirPermissoes() {
+        print("Permissões: Gerenciar estoque, visualizar ordens de compra")
+    }
+}
+
+# Interface da Abstract Factory para criação dos usuários
+interface UsuarioFactory {
+    metodo criarUsuario(): Usuario
+}
+
+# Classes concretas da fábrica para cada tipo de usuário
+classe AdminFactory implements UsuarioFactory {
+    metodo criarUsuario(): Usuario {
+        return new Admin()
+    }
+}
+
+classe ClienteFactory implements UsuarioFactory {
+    metodo criarUsuario(): Usuario {
+        return new Cliente()
+    }
+}
+
+classe FornecedorFactory implements UsuarioFactory {
+    metodo criarUsuario(): Usuario {
+        return new Fornecedor()
+    }
+}
+
+# Código cliente que usa a fábrica para criar objetos
+classe SistemaDeCadastro {
+    metodo registrarUsuario(factory: UsuarioFactory) {
+        usuario = factory.criarUsuario()
+        usuario.exibirPermissoes()
+        # Lógica de registro adicional
+    }
+}
+
+# Exemplo de uso do SistemaDeCadastro com diferentes fábricas
+sistema = new SistemaDeCadastro()
+
+# Criando um admin
+sistema.registrarUsuario(new AdminFactory())
+
+# Criando um cliente
+sistema.registrarUsuario(new ClienteFactory())
+
+# Criando um fornecedor
+sistema.registrarUsuario(new FornecedorFactory())
